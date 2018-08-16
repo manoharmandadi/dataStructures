@@ -1,6 +1,8 @@
-package com.ds.sort.simple;
+package com.manosoft.datastructures.sort;
 
 import java.util.Comparator;
+
+import com.manosoft.datastructures.model.Person;
 
 public class FirstNameComparator implements Comparator<Person> {
 

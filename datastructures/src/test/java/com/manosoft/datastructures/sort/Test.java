@@ -1,7 +1,10 @@
-package com.ds.sort.simple;
+package com.manosoft.datastructures.sort;
 
 import java.util.Arrays;
 import java.util.Comparator;
+
+import com.manosoft.datastructures.model.Person;
+
 
 public class Test {
 	public static void main(String[] args) {
@@ -17,7 +20,7 @@ public class Test {
 		BubbleSort<Person> sort = new BubbleSort<Person>(sample);
 		Comparator<Person> fNameComparator = new FirstNameComparator();
 //		System.out.println(sort.sort(fNameComparator));
-		System.out.println(sort.sort());
+//		System.out.println(sort.sort());
 		System.out.println(Arrays.toString(sample));
 		
 	}

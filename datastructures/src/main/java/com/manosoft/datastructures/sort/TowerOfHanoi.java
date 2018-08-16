@@ -16,7 +16,9 @@ public class TowerOfHanoi {
 			System.out.println("Moving :" +currVal);
 			
 			for(int j=0; j<i;j++){
-				if()
+				if(false){
+					
+				}
 				
 			}
 		}
