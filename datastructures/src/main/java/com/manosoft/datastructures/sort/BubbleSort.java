@@ -33,6 +33,9 @@ public class BubbleSort<E extends Comparable<E>>{
 		logger.debug("Comparision: "+comparisionCount+" ,Swappings: "+swapCount);
 	}
 	
+	/**
+	* Add Method comments for Sort Method
+	*/
 	public void sort(Comparator<E> comparator){
 		E temp;
 		int comparisionCount = 0, swapCount = 0;
