@@ -5,6 +5,9 @@ import java.util.Comparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+This class sorts the given elements as per Natural Sorting order of the elements
+*/
 public class BubbleSort<E extends Comparable<E>>{
 	
 	private static Logger logger = LoggerFactory.getLogger(BubbleSort.class);
