@@ -6,6 +6,7 @@ import com.manosoft.datastructures.model.Person;
 
 /**
 Class level comment added
+Confliecting clss level comments
 */
 public class FirstNameComparator implements Comparator<Person> {
 
