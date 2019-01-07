@@ -10,12 +10,12 @@ import com.manosoft.datastructures.sort.BubbleSortTest;
 
 import junit.framework.TestSuite;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class DataStructuresApplicationTests {
 
 
-	@Test
+	//@Test
 	public void contextLoads() {
 	}
 }
