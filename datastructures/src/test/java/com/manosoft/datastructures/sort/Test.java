@@ -2,6 +2,7 @@ package com.manosoft.datastructures.sort;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Stack;
 
 import com.manosoft.datastructures.model.Person;
 
@@ -22,7 +23,6 @@ public class Test {
 //		System.out.println(sort.sort(fNameComparator));
 //		System.out.println(sort.sort());
 		System.out.println(Arrays.toString(sample));
-		
 	}
 	
 }

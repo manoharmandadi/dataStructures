@@ -2,56 +2,63 @@ package com.manosoft.datastructures.model;
 
 public class Person implements Comparable<Person> {
 
-	private String fName;
-	private String lName;
-	private int ID;
+	private String firstName;
+	private String lastName;
+	private int id;
 
 	public Person() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Person(int id, String fName, String lName) {
-		this.ID = id;
-		this.fName = fName;
-		this.lName = lName;
+	public Person(int id, String firstName, String lastName) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 
 	public String toString() {
-		return ID + " " + fName + " " + lName;
+		return id + " " + firstName + " " + lastName;
 	}
 
 	public int compareTo(Person o) {
 		Person p = (Person) o;
-		if (this.ID > p.ID) {
+		if (this.id > p.id) {
 			return 1;
-		} else if (this.ID == p.ID) {
+		} else if (this.id == p.id) {
 			return 0;
 		} else {
 			return -1;
 		}
 	}
 
-	public String getfName() {
-		return fName;
-	}
+    public String getFirstName()
+    {
+        return firstName;
+    }
 
-	public void setfName(String fName) {
-		this.fName = fName;
-	}
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
 
-	public String getlName() {
-		return lName;
-	}
+    public String getLastName()
+    {
+        return lastName;
+    }
 
-	public void setlName(String lName) {
-		this.lName = lName;
-	}
+    public void setLastName(String lastName)
+    {
+        this.lastName = lastName;
+    }
 
-	public int getID() {
-		return ID;
-	}
+    public int getId()
+    {
+        return id;
+    }
 
-	public void setID(int iD) {
-		ID = iD;
-	};
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
 }

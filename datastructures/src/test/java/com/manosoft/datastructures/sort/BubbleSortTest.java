@@ -5,9 +5,12 @@ import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
 public class BubbleSortTest{
 	private static Logger logger = LoggerFactory.getLogger(BubbleSortTest.class);
 	private Integer[] ascArr=new Integer[19];
@@ -39,8 +42,10 @@ public class BubbleSortTest{
 	}
 
 	public void checkOrder(Integer[] arr){
-		int prev = 0;
-		for(int curr:arr){
+		int prev = arr[0];
+		int curr = 0;
+		for(int i = 1; i < arr.length; i++){
+		    curr = arr[i];
 			assertTrue(curr > prev);
 		}
 	}
