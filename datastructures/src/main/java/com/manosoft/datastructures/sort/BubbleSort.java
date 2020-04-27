@@ -5,6 +5,8 @@ import java.util.Comparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.manosoft.datastructures.model.SortResponse;
+
 /**
 This class sorts the given elements as per Natural Sorting order of the elements
 */
@@ -16,7 +18,7 @@ public class BubbleSort<E extends Comparable<E>>{
 		a = sample;
 	}
 
-	public void sort(){
+	public SortResponse<E> sort(){
 		E temp;
 		int comparisionCount = 0, swapCount = 0;
 		for(int i=a.length-1;i>0;i--){
@@ -30,7 +32,9 @@ public class BubbleSort<E extends Comparable<E>>{
 				}
 			}
 		}
+		SortResponse<E> resp = new SortResponse<>(a, comparisionCount, swapCount);
 		logger.debug("Comparision: "+comparisionCount+" ,Swappings: "+swapCount);
+		return resp;
 	}
 	
 	/**

@@ -14,7 +14,7 @@ import com.manosoft.datastructures.linear.Stack;
 import com.manosoft.datastructures.model.Person;
 
 @RestController
-@RequestMapping("stack")
+@RequestMapping("datastructures/stack")
 public class StackController {
 
     private static final Logger logger = LoggerFactory.getLogger(StackController.class);
