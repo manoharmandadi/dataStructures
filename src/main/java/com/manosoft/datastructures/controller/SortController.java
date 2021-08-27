@@ -1,12 +1,12 @@
 package com.manosoft.datastructures.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +19,7 @@ import com.manosoft.datastructures.sort.BubbleSort;
 public class SortController {
     
     @PutMapping(value = "sort", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SortResponse<Integer>> sort(@RequestParam(name = "algorithm") String algorithm, @RequestParam(name="values") List<Integer> values) {
+    public ResponseEntity<SortResponse<Integer>> sort(@RequestParam(name = "algorithm") String algorithm, @RequestBody List<Integer> values) {
         
         if(algorithm != null && algorithm.equalsIgnoreCase("BubbleSort")){
             BubbleSort<Integer> bubbleSort = new BubbleSort<>(values.toArray(new Integer[values.size()])); 
