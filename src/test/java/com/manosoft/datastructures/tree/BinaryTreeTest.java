@@ -1,17 +1,16 @@
 package com.manosoft.datastructures.tree;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BinaryTreeTest {
 	
 	private BinaryTree<String> binaryTree;
 	
-	@Before
+	@BeforeEach
 	public void setUp(){
 		binaryTree = new BinaryTree<String>();
 		binaryTree.insert(7, "Seven");
@@ -47,7 +46,7 @@ public class BinaryTreeTest {
 		binaryTree.inOrderTraverse();
 	}
 	
-	@After
+	@AfterEach
 	public void tearDown(){
 		binaryTree = null;
 	}
