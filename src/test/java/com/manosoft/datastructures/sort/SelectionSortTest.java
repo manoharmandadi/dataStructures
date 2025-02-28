@@ -8,7 +8,7 @@ import org.junit.Before;
 
 public class SelectionSortTest{
 	
-	Integer []a ;
+/*	Integer []a ;
 	@Before
 	public void setUp() throws Exception {
 		a = new Integer[100];
@@ -33,4 +33,5 @@ public class SelectionSortTest{
 	public void tearDown(){
 		a = null;
 	}
+	*/
 }

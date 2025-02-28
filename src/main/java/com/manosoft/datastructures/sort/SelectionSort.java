@@ -1,14 +1,13 @@
 package com.manosoft.datastructures.sort;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class SelectionSort<E extends Comparable<E>> {
 
-	private E[] a;
-	
-	public SelectionSort(E[] a){
-		this.a = a; 
-	}
-	
-	public String sort(){
+	private static final Logger logger = LogManager.getLogger(SelectionSort.class);
+
+	public <E extends Comparable> E[] sort(E[] a){
 		int comparisionCount = 0, swapCount = 0;
 		int newLowIndex=0;
 		for(int i=0; i<a.length;i++){
@@ -25,7 +24,9 @@ public class SelectionSort<E extends Comparable<E>> {
 			a[newLowIndex] = temp;
 			swapCount++;
 		}
-		return "Comparisions : "+comparisionCount+" , Swappings : "+swapCount;
+		logger.info("Comparisions : "+comparisionCount+" , Swappings : "+swapCount);
+		return a;
+
 	}
 	
 
