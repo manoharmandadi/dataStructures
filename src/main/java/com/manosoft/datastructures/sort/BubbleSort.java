@@ -1,16 +1,16 @@
 package com.manosoft.datastructures.sort;
 
-import java.util.Comparator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Comparator;
 
 /**
 This class sorts the given elements as per Natural Sorting order of the elements
 */
 public class BubbleSort<E extends Comparable<E>>{
 	
-	private static Logger logger = LoggerFactory.getLogger(BubbleSort.class);
+	private static Logger logger = LogManager.getLogger(BubbleSort.class);
 
 	public <E extends Comparable> E[] sort(E[] a){
 		E temp;
