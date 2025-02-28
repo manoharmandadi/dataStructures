@@ -17,25 +17,22 @@ public class BubbleSortTest{
 	@Test
 	public void TestSorted(){
 		logger.info("Test Ascending Ordered Array Sorting");
-		BubbleSort<Integer> bubbleSort = new BubbleSort<Integer>(ascArr);
-		bubbleSort.sort();
-		checkOrder(bubbleSort.getSortedArray());
+		BubbleSort<Integer> bubbleSort = new BubbleSort<Integer>();
+		checkOrder(bubbleSort.sort(ascArr));
 	}
 
 	@Test
 	public void TestDescSorted(){
 		logger.info("Test Descending Ordered Array Sorting");
-		BubbleSort<Integer> bubbleSort = new BubbleSort<Integer>(descArr);
-		bubbleSort.sort();
-		checkOrder(bubbleSort.getSortedArray());
+		BubbleSort<Integer> bubbleSort = new BubbleSort<Integer>();
+		checkOrder(bubbleSort.sort(descArr));
 	}
 
 	@Test
 	public void TestRandSorted(){
 		logger.info("Test Random Array Sorting");
-		BubbleSort<Integer> bubbleSort = new BubbleSort<Integer>(randArr);
-		bubbleSort.sort();
-		checkOrder(bubbleSort.getSortedArray());
+		BubbleSort<Integer> bubbleSort = new BubbleSort<Integer>();
+		checkOrder(bubbleSort.sort(randArr));
 	}
 
 	public void checkOrder(Integer[] arr){

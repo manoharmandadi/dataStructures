@@ -11,12 +11,8 @@ This class sorts the given elements as per Natural Sorting order of the elements
 public class BubbleSort<E extends Comparable<E>>{
 	
 	private static Logger logger = LoggerFactory.getLogger(BubbleSort.class);
-	private E[] a;
-	public BubbleSort(E[] sample) {
-		a = sample;
-	}
 
-	public void sort(){
+	public <E extends Comparable> E[] sort(E[] a){
 		E temp;
 		int comparisionCount = 0, swapCount = 0;
 		for(int i=a.length-1;i>0;i--){
@@ -31,12 +27,13 @@ public class BubbleSort<E extends Comparable<E>>{
 			}
 		}
 		logger.debug("Comparision: "+comparisionCount+" ,Swappings: "+swapCount);
+		return a;
 	}
 	
 	/**
 	* Add Method comments for Sort Method
 	*/
-	public void sort(Comparator<E> comparator){
+	public <E> E[] sort(E[] a, Comparator<E> comparator){
 		E temp;
 		int comparisionCount = 0, swapCount = 0;
 		for(int i=a.length-1;i>0;i--){
@@ -51,9 +48,7 @@ public class BubbleSort<E extends Comparable<E>>{
 			}
 		}
 		logger.debug("Comparision: "+comparisionCount+" ,Swappings: "+swapCount);
-	}
-
-	public E[] getSortedArray(){
 		return a;
 	}
+
 }
