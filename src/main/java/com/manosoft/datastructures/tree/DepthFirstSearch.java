@@ -4,15 +4,15 @@ import com.manosoft.datastructures.linear.NumberNames;
 
 import java.util.Random;
 
-public class DepthFirstSearch<T> {
+public class DepthFirstSearch<T extends Comparable<T>> {
 
 
     public static void main(String[] args) {
         BinaryTree<Integer> btree = new BinaryTree<>();
         Random random = new Random();
-        for(int i=0; i<30000000; i++){
+        for(int i=0; i<30; i++){
             int num = random.nextInt( );
-            btree.insert(num, num);
+            btree.insert(num);
 //            System.out.print(num+" ");
         }
 /*
@@ -28,11 +28,11 @@ public class DepthFirstSearch<T> {
         DepthFirstSearch<Integer> dfs = new DepthFirstSearch<>();
         dfs.search(btree.root);
     }
-    public void search(Node<T> node){
+    public void search(Node<Integer> node){
         if(node !=null){
             search(node.left);
             //System.out.println(node.nodeVal);
-            System.out.println(NumberNames.numberToName(node.nodeVal));
+            System.out.println(NumberNames.numberToName(node.t));
             search(node.right);
         }
     }

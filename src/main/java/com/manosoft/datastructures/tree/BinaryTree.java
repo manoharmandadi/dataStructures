@@ -1,66 +1,63 @@
 package com.manosoft.datastructures.tree;
 
-public class BinaryTree <T> {
+public class BinaryTree <T extends Comparable<T>> {
 
 
 	Node<T> root = null;
 	
 	
-	public T find(int nodeVal){
+	public T find(T t){
 		if(root==null){
 			return null;
 		}
-		Node<T> node =  find(root, nodeVal);
+		Node<T> node =  find(root, t);
 		return node.t;
 	}
 
-	private Node<T> find(Node<T> currRoot, int nodeVal){
-		int currNodeVal = currRoot.nodeVal;
-		if( currNodeVal == nodeVal){
+	private Node<T> find(Node<T> currRoot, T t){
+		int compareVal = currRoot.t.compareTo(t);
+		if( compareVal == 0){
 			return currRoot;
-		} else if(currNodeVal > nodeVal){
+		} else if(compareVal > 0){
 			if(hasLeftChild(currRoot)){
-				return find(currRoot.left, nodeVal);
+				return find(currRoot.left, t);
 			}
 			
-		} else if(currNodeVal < nodeVal){
+		} else if(compareVal < 0){
 			if(hasRightChild(currRoot)){
-				return find(currRoot.right, nodeVal);
+				return find(currRoot.right, t);
 			}
 		}
 		return null;
 	}
 	
-	public void insert(int nodeVal, T t){
+	public void insert(T t){
 		Node<T> node = new Node<T>();
 		node.t = t;
-		node.nodeVal = nodeVal;
 		if(root==null){
 			root = node;
 		} else {
-			insert(root, nodeVal, t);
+			insert(root, t);
 		}
 		
 	}
 	
-	private void insert(Node<T> currNode, int nodeVal, T t){
+	private void insert(Node<T> currNode, T t){
 		Node<T> node = new Node<T>();
 		node.t = t;
-		node.nodeVal = nodeVal;
-		
-		int currNodeVal = currNode.nodeVal;
-		if( currNodeVal == nodeVal){
+		int comareVal = currNode.t.compareTo(t);
+		if( comareVal == 0){
 			System.out.println("Already Exists. Replacing with new Value");
 			currNode.t = t;
-		} else if(currNodeVal > nodeVal){
+		} else if(comareVal > 0){
 			if(hasLeftChild(currNode)){
-				insert(currNode.left, nodeVal, t);
+				insert(currNode.left, t);
 			} else {
 				currNode.left = node;
 			}
-		} else if (currNodeVal < nodeVal){
+		} else if (comareVal < 0){
 			if(hasRightChild(currNode)){
-				insert(currNode.right, nodeVal, t);
+				insert(currNode.right, t);
 			} else {
 				currNode.right = node;
 			}
@@ -78,16 +75,16 @@ public class BinaryTree <T> {
 		return (node.right != null);
 	}
 
-	public T delete(int nodeVal){
+	public T delete(T t){
 		if(root == null){
 			System.out.println("No Elements in Tree");
 		}
 		Node<T> currNode = root;
 		Node<T> parentNode = root;
 		boolean isLeftChild = false;
-		while(currNode.nodeVal!=nodeVal){
+		while(currNode.t.compareTo(t) != 0){
 			parentNode = currNode;
-			if(currNode.nodeVal < nodeVal ){
+			if(currNode.t.compareTo(t) < 0 ){
 				currNode = currNode.right;
 				isLeftChild = false;
 			} else {
@@ -157,13 +154,13 @@ public class BinaryTree <T> {
 		display(root);
 	}
 	private void display(Node<T> currNode){
-		System.out.println(currNode.nodeVal+":"+currNode.t);
 		if(hasLeftChild(currNode)){
-			System.out.print("L");
+//			System.out.print("L");
 			display(currNode.left);
 		}
+		System.out.println(currNode.t);
 		if(hasRightChild(currNode)){
-			System.out.print("R");
+//			System.out.print("R");
 			display(currNode.right);
 		}
 	}

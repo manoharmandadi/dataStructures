@@ -8,16 +8,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BinaryTreeTest {
 	
-	private BinaryTree<String> binaryTree;
+	private BinaryTree binaryTree;
 	
 	@BeforeEach
 	public void setUp(){
-		binaryTree = new BinaryTree<String>();
-		binaryTree.insert(7, "Seven");
-		binaryTree.insert(6, "Six");
-		binaryTree.insert(5, "Five");
-		binaryTree.insert(4, "Four");
-		binaryTree.insert(3, "Three");
+		binaryTree = new BinaryTree<Integer>();
+		binaryTree.insert(7);
+		binaryTree.insert(6 );
+		binaryTree.insert(5);
+		binaryTree.insert(4 );
+		binaryTree.insert(3);
 	}
 
 	@Test
