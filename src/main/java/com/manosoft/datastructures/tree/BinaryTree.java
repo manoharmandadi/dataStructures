@@ -3,18 +3,18 @@ package com.manosoft.datastructures.tree;
 public class BinaryTree <T> {
 
 
-	Element<T> root = null;
+	Node<T> root = null;
 	
 	
 	public T find(int nodeVal){
 		if(root==null){
 			return null;
 		}
-		Element<T> node =  find(root, nodeVal);
+		Node<T> node =  find(root, nodeVal);
 		return node.t;
 	}
 
-	private Element<T> find(Element<T> currRoot, int nodeVal){
+	private Node<T> find(Node<T> currRoot, int nodeVal){
 		int currNodeVal = currRoot.nodeVal;
 		if( currNodeVal == nodeVal){
 			return currRoot;
@@ -32,7 +32,7 @@ public class BinaryTree <T> {
 	}
 	
 	public void insert(int nodeVal, T t){
-		Element<T> node = new Element<T>();
+		Node<T> node = new Node<T>();
 		node.t = t;
 		node.nodeVal = nodeVal;
 		if(root==null){
@@ -43,8 +43,8 @@ public class BinaryTree <T> {
 		
 	}
 	
-	private void insert(Element<T> currNode, int nodeVal, T t){
-		Element<T> node = new Element<T>();
+	private void insert(Node<T> currNode, int nodeVal, T t){
+		Node<T> node = new Node<T>();
 		node.t = t;
 		node.nodeVal = nodeVal;
 		
@@ -67,14 +67,14 @@ public class BinaryTree <T> {
 		}
 	}
 	
-	private boolean hasChild(Element<T> node){
+	private boolean hasChild(Node<T> node){
 		return !(node.left==null && node.right==null);
 	}
 	
-	private boolean hasLeftChild(Element<T> node){
+	private boolean hasLeftChild(Node<T> node){
 		return (node.left != null);
 	}
-	private boolean hasRightChild(Element<T> node){
+	private boolean hasRightChild(Node<T> node){
 		return (node.right != null);
 	}
 
@@ -82,8 +82,8 @@ public class BinaryTree <T> {
 		if(root == null){
 			System.out.println("No Elements in Tree");
 		}
-		Element<T> currNode = root;
-		Element<T> parentNode = root;
+		Node<T> currNode = root;
+		Node<T> parentNode = root;
 		boolean isLeftChild = false;
 		while(currNode.nodeVal!=nodeVal){
 			parentNode = currNode;
@@ -106,7 +106,7 @@ public class BinaryTree <T> {
 		} else {
 			if(hasLeftChild(currNode) && hasRightChild(currNode)){
 				System.out.println("Has both child. Find Successor");
-				Element<T> successor = findSuccessor(currNode);
+				Node<T> successor = findSuccessor(currNode);
 				System.out.println("Successor"+successor);
 				successor.left = currNode.left;
 				successor.right = currNode.right;
@@ -128,9 +128,9 @@ public class BinaryTree <T> {
 		return currNode.t;
 	}
 
-	private Element<T> findSuccessor(Element<T> currNode){
+	private Node<T> findSuccessor(Node<T> currNode){
 		currNode = currNode.right;
-		Element<T> parentNode = currNode.right;
+		Node<T> parentNode = currNode.right;
 		while(currNode.left!=null){
 			parentNode = currNode;
 			currNode = currNode.left;
@@ -145,7 +145,7 @@ public class BinaryTree <T> {
 		return currNode;
 	}
 	
-	private void updateChild(Element<T> parent, Element<T> child, boolean isLeftChild){
+	private void updateChild(Node<T> parent, Node<T> child, boolean isLeftChild){
 		if(isLeftChild){
 			parent.left = child;
 		} else {
@@ -156,7 +156,7 @@ public class BinaryTree <T> {
 	public void display(){
 		display(root);
 	}
-	private void display(Element<T> currNode){
+	private void display(Node<T> currNode){
 		System.out.println(currNode.nodeVal+":"+currNode.t);
 		if(hasLeftChild(currNode)){
 			System.out.print("L");
@@ -173,7 +173,7 @@ public class BinaryTree <T> {
 		inOrderTraverse(root);
 	}
 	
-	private void inOrderTraverse(Element<T> node){
+	private void inOrderTraverse(Node<T> node){
 		if(hasLeftChild(node)){
 			inOrderTraverse(node.left);
 		}
@@ -181,16 +181,5 @@ public class BinaryTree <T> {
 		if(hasRightChild(node)){
 			inOrderTraverse(node.right);
 		}
-	}
-}
-class Element<T>{
-	Element<T> left;
-	Element<T> right;
-	int nodeVal;
-	T t;
-	
-	@Override
-	public String toString() {
-		return nodeVal +" L"+(left!=null?left.nodeVal:"null")+" R"+(right!=null?right.nodeVal:"null");
 	}
 }
