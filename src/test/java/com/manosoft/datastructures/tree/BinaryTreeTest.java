@@ -31,7 +31,7 @@ public class BinaryTreeTest {
 
 	@Test
 	public void testInsert(){
-		binaryTree.insert(9, "Nine");
+		binaryTree.insert(9);
 		assertEquals("Nine", binaryTree.find(9));
 	}
 	
