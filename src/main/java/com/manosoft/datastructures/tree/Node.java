@@ -7,6 +7,6 @@ public class Node<T extends Comparable<T>> {
 
     @Override
     public String toString() {
-        return t + " L" + (left != null ? left : "null") + " R" + (right != null ? right : "null");
+        return t+ " L" + (left != null ? left.t : "null") + " R" + (right != null ? right.t : "null");
     }
 }

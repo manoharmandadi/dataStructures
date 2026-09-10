@@ -20,8 +20,7 @@ public class Person implements Comparable<Person> {
 		return ID + " " + fName + " " + lName;
 	}
 
-	public int compareTo(Person o) {
-		Person p = (Person) o;
+	public int compareTo(Person p) {
 		if (this.ID > p.ID) {
 			return 1;
 		} else if (this.ID == p.ID) {

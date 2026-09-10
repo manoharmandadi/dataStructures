@@ -18,6 +18,7 @@ public class BinaryTree <T extends Comparable<T>> {
 		return node.t;
 	}
 
+	// Depth First Search
 	private Node<T> find(Node<T> currRoot, T t){
 		int compareVal = currRoot.t.compareTo(t);
 		if( compareVal == 0){
@@ -26,7 +27,6 @@ public class BinaryTree <T extends Comparable<T>> {
 			if(hasLeftChild(currRoot)){
 				return find(currRoot.left, t);
 			}
-			
 		} else if(compareVal < 0){
 			if(hasRightChild(currRoot)){
 				return find(currRoot.right, t);
@@ -34,7 +34,22 @@ public class BinaryTree <T extends Comparable<T>> {
 		}
 		return null;
 	}
-	
+
+	public int maxDepth(){
+		return maxDepth(root);
+	}
+
+	private int maxDepth(Node<T> node){
+		int leftDepth = 0, rightDepth = 0;
+		if(hasLeftChild(node)){
+			leftDepth = maxDepth(node.left);
+		}
+		if(hasRightChild(node)){
+			rightDepth = maxDepth(node.right);
+		}
+		return Math.max(leftDepth, rightDepth) + 1;
+	}
+
 	public void insert(T t){
 		Node<T> node = new Node<T>();
 		node.t = t;
