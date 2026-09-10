@@ -1,4 +1,5 @@
-<b>   Binary Trees </b>
-Breadth First Search - BinarySearchMain.search()
-Depth First Search - BinaryTree.find()
-Max Depth - BinaryTree.maxDepth()
+<b>   Binary Trees </b><br>
+Breadth First Search - BinarySearchMain.search()<br>
+Depth First Search - BinaryTree.find()<br>
+Max Depth - BinaryTree.maxDepth()<br>
+
