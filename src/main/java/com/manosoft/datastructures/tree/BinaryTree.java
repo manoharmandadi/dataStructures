@@ -151,16 +151,17 @@ public class BinaryTree <T extends Comparable<T>> {
 	}
 	
 	public void display(){
+		System.out.println("Displaying Tree");
 		display(root);
 	}
 	private void display(Node<T> currNode){
 		if(hasLeftChild(currNode)){
-//			System.out.print("L");
+//			System.out.print("L"+currNode.t+" ");
 			display(currNode.left);
 		}
 		System.out.println(currNode.t);
 		if(hasRightChild(currNode)){
-//			System.out.print("R");
+//			System.out.print("R"+currNode.t+" ");
 			display(currNode.right);
 		}
 	}
