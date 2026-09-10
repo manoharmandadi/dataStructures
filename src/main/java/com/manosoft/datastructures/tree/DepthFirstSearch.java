@@ -1,10 +1,13 @@
 package com.manosoft.datastructures.tree;
 
-import com.manosoft.datastructures.linear.NumberNames;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
 public class DepthFirstSearch<T extends Comparable<T>> {
+
+    private static final Logger logger = LogManager.getLogger(DepthFirstSearch.class);
 
 
     public static void main(String[] args) {
@@ -16,7 +19,7 @@ public class DepthFirstSearch<T extends Comparable<T>> {
             int num = random.nextInt( );
             btree.insert(num);
             if(i==15) val = num;
-//            System.out.print(num+" ");
+//            logger.info(num+" ");
         }
 //        btree.insert(5);
 //        btree.insert(9);
@@ -30,7 +33,7 @@ public class DepthFirstSearch<T extends Comparable<T>> {
         dfs.search(btree.root, val);
     }
     public Integer search(Node<Integer> node, int value){
-        System.out.println("Searching for " + value + " in node " + node.t);
+        logger.info("Searching for " + value + " in node " + node.t);
         if(node == null)    {
             return null;
         }

@@ -1,6 +1,11 @@
 package com.manosoft.datastructures.linear;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Stack {
+
+    public static final Logger logger = LogManager.getLogger(Stack.class);
 
     private Object[] arr ;
 
@@ -21,7 +26,7 @@ public class Stack {
     
     public Object pop() {
         if(currIdx < 0) {
-            System.out.println("Stack is Empty.");
+            logger.info("Stack is Empty.");
             return null;
         } else {
             return arr[currIdx--];
@@ -30,7 +35,7 @@ public class Stack {
 
     public Object peep() {
         if(currIdx < 0) {
-            System.out.println("Stack is Empty.");
+            logger.info("Stack is Empty.");
             return null;
         } else {
             return arr[currIdx];

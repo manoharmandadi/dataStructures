@@ -15,12 +15,12 @@ public class MainTest {
 //			sample[i] = random+"";
 			sample[i] = new Person(random, random+""+i, i+""+random);
 		}
-		System.out.println("Before Sorting :");
-		System.out.println(Arrays.toString(sample));
+		logger.info("Before Sorting :");
+		logger.info(Arrays.toString(sample));
 		BubbleSort<Person> sort = new BubbleSort();
 		Comparator<Person> fNameComparator = new FirstNameComparator();
 		sample = sort.sort(sample, fNameComparator);
-		System.out.println(Arrays.toString(sample));
+		logger.info(Arrays.toString(sample));
 		
 	}
 	

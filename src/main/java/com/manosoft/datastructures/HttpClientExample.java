@@ -1,7 +1,8 @@
 package com.manosoft.datastructures;
 
 
-import tools.jackson.core.type.TypeReference;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -15,6 +16,8 @@ import java.util.List;
 
 public class HttpClientExample {
 
+    private static final Logger logger = LogManager.getLogger(HttpClientExample.class);
+
     public static void main(String[] args) {
         try {
             HttpRequest request = HttpRequest.newBuilder().uri(new URI("https://jsonplaceholder.typicode.com/posts")).build();
@@ -24,11 +27,11 @@ public class HttpClientExample {
             ObjectMapper objectMapper = new ObjectMapper();
             List<Post> postList = Arrays.asList(objectMapper.readValue(response.body(), Post[].class));
 //                    objectMapper.readValue(response.body(), objectMapper.getTypeFactory().constructCollectionType(List.class, Post.class));
-            System.out.println(response.body());
-            System.out.println(postList.get(0).title);
+            logger.info(response.body());
+            logger.info(postList.get(0).title);
 
         } catch ( URISyntaxException | IOException | InterruptedException ex){
-            System.out.println(ex);
+            logger.info(ex);
         }
     }
 }

@@ -1,7 +1,11 @@
 package com.manosoft.datastructures.tree;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class BinaryTree <T extends Comparable<T>> {
 
+	private static final Logger logger = LogManager.getLogger(BinaryTree.class);
 
 	Node<T> root = null;
 	
@@ -47,7 +51,7 @@ public class BinaryTree <T extends Comparable<T>> {
 		node.t = t;
 		int comareVal = currNode.t.compareTo(t);
 		if( comareVal == 0){
-			System.out.println("Already Exists. Replacing with new Value");
+			logger.info("Already Exists. Replacing with new Value");
 			currNode.t = t;
 		} else if(comareVal > 0){
 			if(hasLeftChild(currNode)){
@@ -77,7 +81,7 @@ public class BinaryTree <T extends Comparable<T>> {
 
 	public T delete(T t){
 		if(root == null){
-			System.out.println("No Elements in Tree");
+			logger.info("No Elements in Tree");
 		}
 		Node<T> currNode = root;
 		Node<T> parentNode = root;
@@ -92,19 +96,19 @@ public class BinaryTree <T extends Comparable<T>> {
 				currNode = currNode.left;
 			}
 			if(currNode == null){
-				System.out.println("Didnt find the element to Delete");
+				logger.info("Didnt find the element to Delete");
 				return null;
 			}
 		}
 		//currNode is the one to be deleted
 		if(!hasChild(currNode)){
-			System.out.println("Has no Child"+currNode);
+			logger.info("Has no Child"+currNode);
 			updateChild(parentNode, null, isLeftChild);
 		} else {
 			if(hasLeftChild(currNode) && hasRightChild(currNode)){
-				System.out.println("Has both child. Find Successor");
+				logger.info("Has both child. Find Successor");
 				Node<T> successor = findSuccessor(currNode);
-				System.out.println("Successor"+successor);
+				logger.info("Successor"+successor);
 				successor.left = currNode.left;
 				successor.right = currNode.right;
 				
@@ -151,17 +155,17 @@ public class BinaryTree <T extends Comparable<T>> {
 	}
 	
 	public void display(){
-		System.out.println("Displaying Tree");
+		logger.info("Displaying Tree");
 		display(root);
 	}
 	private void display(Node<T> currNode){
 		if(hasLeftChild(currNode)){
-//			System.out.print("L"+currNode.t+" ");
+//			logger.info("L"+currNode.t+" ");
 			display(currNode.left);
 		}
-		System.out.println(currNode.t);
+		logger.info(currNode.t);
 		if(hasRightChild(currNode)){
-//			System.out.print("R"+currNode.t+" ");
+//			logger.info("R"+currNode.t+" ");
 			display(currNode.right);
 		}
 	}
@@ -175,7 +179,7 @@ public class BinaryTree <T extends Comparable<T>> {
 		if(hasLeftChild(node)){
 			inOrderTraverse(node.left);
 		}
-		System.out.println(node);
+		logger.info(node);
 		if(hasRightChild(node)){
 			inOrderTraverse(node.right);
 		}

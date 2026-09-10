@@ -1,6 +1,8 @@
 package com.manosoft.datastructures.slidingwindow;
 
 import com.manosoft.datastructures.io.BufferedFileOutput;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Anagrams {
+    private static final Logger logger = LogManager.getLogger(Anagrams.class);
 
     static List<String> anagrams = new ArrayList<>();
     static AtomicLong  allCombinations = new AtomicLong(0);
@@ -46,14 +49,15 @@ public class Anagrams {
         bfo.close();
 
         Instant end = Instant.now();
-        System.out.println("Total Combinations : "+allCombinations.get());
+        logger.info("Total Combinations : "+allCombinations.get());
         Duration timeTaken = Duration.between(start, end);
-        System.out.println("Time Taken : "+timeTaken.getSeconds());
+        logger.info("Time Taken : "+timeTaken.getSeconds());
 
     }
 }
 
 class Run extends Thread{
+    public static final Logger logger = LogManager.getLogger(Run.class);
     private int idx;
     private char[] preArr;
     private char[] curr;
@@ -71,7 +75,7 @@ class Run extends Thread{
     @Override
     public void run() {
         createAnagrams(idx, preArr, curr);
-        System.out.println("All Combinations: " + allCombinations);
+        logger.info("All Combinations: " + allCombinations);
         finalCombinations.addAndGet(allCombinations);
     }
 

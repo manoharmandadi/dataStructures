@@ -1,12 +1,17 @@
 package com.manosoft.datastructures.linear;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Objects;
 
 public class NumberNames {
 
+    public static final Logger logger = LogManager.getLogger(NumberNames.class);
+
 
     public static void main(String[] args) {
-        System.out.println(numberToName(7953426));
+        logger.info(numberToName(7953426));
     }
 
     public static String numberToName(int number){

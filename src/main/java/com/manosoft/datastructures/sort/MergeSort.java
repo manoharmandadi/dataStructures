@@ -1,16 +1,21 @@
 package com.manosoft.datastructures.sort;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Arrays;
 
 public class MergeSort {
+
+    public static final Logger logger = LogManager.getLogger(MergeSort.class);
 
     static int visiting = 0;
     int swapping = 0;
     public static void main(String[] args) {
         int[] arr = new int[]{1,3,2,-1,4, 8, 7};
         int[] sorted = sort(arr);
-        System.out.println("Visited: "+ visiting);
-        System.out.print(Arrays.toString(sorted));
+        logger.info("Visited: "+ visiting);
+        logger.info(Arrays.toString(sorted));
 
     }
 
@@ -29,7 +34,7 @@ public class MergeSort {
 
     public static int[] merge(int[] a, int[] b){
 
-        System.out.println("Merging Arrays: "+ Arrays.toString(a) +" with "+Arrays.toString(b));
+        logger.info("Merging Arrays: "+ Arrays.toString(a) +" with "+Arrays.toString(b));
         int aIdx = 0, bIdx = 0, aLen = a.length, bLen = b.length;
         int resLen = a.length + b.length;
         int c[] = new int[resLen];
@@ -49,7 +54,7 @@ public class MergeSort {
                 bIdx++;
             }
         }
-        System.out.println("After Merge: "+ Arrays.toString(c));
+        logger.info("After Merge: "+ Arrays.toString(c));
         return c;
     }
 }
