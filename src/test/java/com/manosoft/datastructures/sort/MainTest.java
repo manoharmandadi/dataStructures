@@ -4,9 +4,12 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import com.manosoft.datastructures.model.Person;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class MainTest {
+	public static final Logger logger = LogManager.getLogger(MainTest.class);
 	public static void main(String[] args) {
 //		String[] sample = new String[100];
 		Person[] sample = new Person[100];
