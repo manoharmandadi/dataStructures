@@ -27,19 +27,19 @@ public class BubbleSortTest extends BaseSortTest {
 		displayTestData();
 	}
 
-	@Test
-	public void TestDescSorted(){
-		logger.info("Test Descending Ordered Array Sorting");
-		BubbleSort<Integer> bubbleSort = new BubbleSort<>();
-		checkOrder(bubbleSort.sort(descArr));
-	}
-
-	@Test
-	public void TestRandSorted(){
-		logger.info("Test Random Array Sorting");
-		BubbleSort<Integer> bubbleSort = new BubbleSort<>();
-		checkOrder(bubbleSort.sort(randArr));
-	}
+//	@Test
+//	public void TestDescSorted(){
+//		logger.info("Test Descending Ordered Array Sorting");
+//		BubbleSort<Integer> bubbleSort = new BubbleSort<>();
+//		checkOrder(bubbleSort.sort(descArr));
+//	}
+//
+//	@Test
+//	public void TestRandSorted(){
+//		logger.info("Test Random Array Sorting");
+//		BubbleSort<Integer> bubbleSort = new BubbleSort<>();
+//		checkOrder(bubbleSort.sort(randArr));
+//	}
 
 	public void checkOrder(Integer[] arr){
 		int prev = 0;

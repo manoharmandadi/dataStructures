@@ -1,5 +1,6 @@
 package com.manosoft.datastructures.sort;
 
+import com.manosoft.datastructures.web.dto.SortResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,8 +12,16 @@ This class sorts the given elements as per Natural Sorting order of the elements
 public class BubbleSort<E extends Comparable<E>>{
 	
 	private static Logger logger = LogManager.getLogger(BubbleSort.class);
+	private E[] a;
 
-	public <E extends Comparable> E[] sort(E[] a){
+	public BubbleSort() {
+	}
+
+	public BubbleSort(E[] a) {
+		this.a = a;
+	}
+
+	public SortResponse<E> sort(){
 		E temp;
 		int comparisionCount = 0, swapCount = 0;
 		for(int i=a.length-1;i>0;i--){
@@ -26,8 +35,28 @@ public class BubbleSort<E extends Comparable<E>>{
 				}
 			}
 		}
+		SortResponse<E> resp = new SortResponse<>(a, comparisionCount, swapCount);
 		logger.debug("Comparision: "+comparisionCount+" ,Swappings: "+swapCount);
-		return a;
+		return resp;
+	}
+
+	public SortResponse<E> sort(E[] a){
+		E temp;
+		int comparisionCount = 0, swapCount = 0;
+		for(int i=a.length-1;i>0;i--){
+			for(int j=0;j<i;j++){
+				comparisionCount++;
+				if((a[j].compareTo(a[j+1])>0)){
+					swapCount++;
+					temp = a[j];
+					a[j] = a[j+1];
+					a[j+1] = temp;
+				}
+			}
+		}
+		SortResponse<E> resp = new SortResponse<>(a, comparisionCount, swapCount);
+		logger.debug("Comparision: "+comparisionCount+" ,Swappings: "+swapCount);
+		return resp;
 	}
 	
 	/**
