@@ -3,8 +3,12 @@ package com.manosoft.datastructures.cache;
 import com.manosoft.datastructures.maps.Entry;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class LRUCache<K,V> {
+    public static final Logger logger = LogManager.getLogger(LRUCache.class);
+
     @Getter
     private int capcity;
 
@@ -22,6 +26,13 @@ public class LRUCache<K,V> {
         this.entries  = new Node[capcity];
     }
 
+    public void printCache(){
+        Node<K, Cacheable<V>> current = head;
+        while(current != null){
+            logger.info( "{}  -> {}",current.getKey() , current.getValue().get());
+            current = current.after;
+        }
+    }
     public boolean containsKey(K k){
         return getNode(k) != null;
     }
@@ -150,7 +161,7 @@ public class LRUCache<K,V> {
 
 
     private int getHashIndex(K k){
-        return k.hashCode() % capcity;
+        return (k.hashCode() & 0x7FFFFFFF) % capcity;
     }
 
     public int size(){

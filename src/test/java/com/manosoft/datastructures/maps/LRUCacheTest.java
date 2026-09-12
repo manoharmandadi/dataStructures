@@ -8,7 +8,6 @@ public class LRUCacheTest {
 
     @Test
     public void test(){
-        {
             LRUCache<String, Cacheable<Integer>> cache = new LRUCache<>(3,15000);
             cache.put("One", new Cacheable<>(1));
             cache.put("Two", new Cacheable<>(2));
@@ -38,6 +37,5 @@ public class LRUCacheTest {
             assert cache.get("Two").get() == 2; // "Two" should still be present
             assert cache.get("Four").get() == 4; // "Four" should still be present
             assert cache.get("Five").get() == 5; // "Five" should be present
-        }
     }
 }
