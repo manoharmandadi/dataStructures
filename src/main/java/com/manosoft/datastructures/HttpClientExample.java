@@ -26,7 +26,7 @@ public class HttpClientExample {
 
             ObjectMapper objectMapper = new ObjectMapper();
             List<Post> postList = Arrays.asList(objectMapper.readValue(response.body(), Post[].class));
-//                    objectMapper.readValue(response.body(), objectMapper.getTypeFactory().constructCollectionType(List.class, Post.class));
+            objectMapper.readValue(response.body(), objectMapper.getTypeFactory().constructCollectionType(List.class, Post.class));
             logger.info(response.body());
             logger.info(postList.get(0).title);
 
