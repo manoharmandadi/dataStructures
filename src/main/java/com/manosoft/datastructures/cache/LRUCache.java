@@ -56,6 +56,11 @@ public class LRUCache<K,V> {
     public V get(K key){
         Node<K,Cacheable<V>> node = getNode(key);
         if(node != null){
+            if(ttl > 0 && (System.currentTimeMillis() - node.getValue().getLastAccessedTime()) > ttl){
+                //Evict the node if it has expired
+                evict(node);
+                return null;
+            }
             //Move the accessed node to tail to mark it as recently used
             updateOrder(node);
             appendToTail(node);
@@ -96,7 +101,7 @@ public class LRUCache<K,V> {
     private Node<K,Cacheable<V>> evict(Node<K,Cacheable<V>> node ){
         updateOrder(node);
         //TODO: Fix next references in the bucket
-        int bucketIdx = node.getKey().hashCode()%capcity;
+        int bucketIdx = getHashIndex(node.getKey());
         Node<K,Cacheable<V>> bucketHead = entries[bucketIdx];
         if(bucketHead == node){
             entries[bucketIdx] = node.next;

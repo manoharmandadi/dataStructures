@@ -1,9 +1,14 @@
 package com.manosoft.datastructures.cache;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Cacheable<V> {
 
     private V value;
+    @Getter
+    @Setter
     private long lastAccessedTime;
 
     public Cacheable(V value) {
