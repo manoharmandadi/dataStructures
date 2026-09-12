@@ -7,14 +7,18 @@ import lombok.Setter;
 public class LRUCache<K,V> {
     @Getter
     private int capcity;
+
     @Getter
     private int size =0;
-    private Node<K,V> head = null;
-    private Node<K,V> tail = null;
-    private Node<K,V>[] entries = null;
+    @Getter
+    private int ttl =0;
+    private Node<K,Cacheable<V>> head = null;
+    private Node<K,Cacheable<V>> tail = null;
+    private Node<K,Cacheable<V>>[] entries = null;
 
-    public LRUCache(int capacity){
+    public LRUCache(int capacity, int ttl){
         this.capcity = capacity;
+        this.ttl = ttl;
         this.entries  = new Node[capcity];
     }
 
@@ -22,12 +26,12 @@ public class LRUCache<K,V> {
         return getNode(k) != null;
     }
 
-    private Node<K,V> getNode(K k){
+    private Node<K,Cacheable<V>> getNode(K k){
         int index = getHashIndex(k);
         if(entries[index] == null){
             return null;
         } else {
-            Node<K,V> current = entries[index];
+            Node<K,Cacheable<V>> current = entries[index];
             while(current != null){
                 if(current.getKey().equals(k)){
                     return current;
@@ -39,18 +43,18 @@ public class LRUCache<K,V> {
     }
 
     public V get(K key){
-        Node<K,V> node = getNode(key);
+        Node<K,Cacheable<V>> node = getNode(key);
         if(node != null){
             //Move the accessed node to tail to mark it as recently used
             updateOrder(node);
             appendToTail(node);
-            return node.getValue();
+            return node.getValue().get();
         } else {
             return null;
         }
     }
 
-    private void appendToTail(Node<K,V> node){
+    private void appendToTail(Node<K,Cacheable<V>> node){
         if(tail == null){
             head = node;
             tail = node;
@@ -63,9 +67,9 @@ public class LRUCache<K,V> {
 
     //Removes the passed Node from the current Order..
     //Should be called when a node is evicted or accessed to update the order of the linked list
-    private void updateOrder(Node<K,V> node){
-        Node<K,V> before = node.before;
-        Node<K,V> after = node.after;
+    private void updateOrder(Node<K,Cacheable<V>> node){
+        Node<K,Cacheable<V>> before = node.before;
+        Node<K,Cacheable<V>> after = node.after;
         if(before != null){
             before.after = after;
         } else {
@@ -78,15 +82,15 @@ public class LRUCache<K,V> {
         }
     }
 
-    private Node<K,V> evict(Node<K,V> node ){
+    private Node<K,Cacheable<V>> evict(Node<K,Cacheable<V>> node ){
         updateOrder(node);
         //TODO: Fix next references in the bucket
         int bucketIdx = node.getKey().hashCode()%capcity;
-        Node<K,V> bucketHead = entries[bucketIdx];
+        Node<K,Cacheable<V>> bucketHead = entries[bucketIdx];
         if(bucketHead == node){
             entries[bucketIdx] = node.next;
         } else {
-            Node<K,V> current = bucketHead;
+            Node<K,Cacheable<V>> current = bucketHead;
             while(current != null && current.next != node){
                 current = current.next;
             }
@@ -102,11 +106,11 @@ public class LRUCache<K,V> {
 
     public V put(K k, V v){
         // If Key Exists, update the value and return the previous value
-        Node<K,V> existingNode = getNode(k);
+        Node<K,Cacheable<V>> existingNode = getNode(k);
         if(existingNode != null){
-            V prevVal = existingNode.getValue();
-            existingNode.setValue(v);
-            return prevVal;
+            Cacheable<V> prevVal = existingNode.getValue();
+            existingNode.setValue(new Cacheable<>(v));
+            return prevVal.get();
         }
         //  Evict if size is at capacity
         if(size == capcity){
@@ -115,7 +119,7 @@ public class LRUCache<K,V> {
         }
 
 
-        Node<K,V> newNode = new Node<>(k,v);
+        Node<K,Cacheable<V>> newNode = new Node<>(k,new Cacheable<>(v));
         size++;
         if(head == null && tail == null){
             head = newNode;
@@ -134,14 +138,14 @@ public class LRUCache<K,V> {
             entries[index] = newNode;
         } else {
             // Collision handling using linked list
-            Node<K,V> current = entries[index];
+            Node<K,Cacheable<V>> current = entries[index];
             while(current.next != null){
                 current = current.next;
             }
             //Now current is the last node in the linked list for this bucket, so we can add the new node to the end
             current.next = newNode;
         }
-        return newNode.value;
+        return newNode.value.get();
     }
 
 
