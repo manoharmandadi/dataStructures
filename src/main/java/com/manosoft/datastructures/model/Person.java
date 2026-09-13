@@ -1,5 +1,10 @@
 package com.manosoft.datastructures.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Person implements Comparable<Person> {
 
 	private String fName;
@@ -30,27 +35,4 @@ public class Person implements Comparable<Person> {
 		}
 	}
 
-	public String getfName() {
-		return fName;
-	}
-
-	public void setfName(String fName) {
-		this.fName = fName;
-	}
-
-	public String getlName() {
-		return lName;
-	}
-
-	public void setlName(String lName) {
-		this.lName = lName;
-	}
-
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int iD) {
-		ID = iD;
-	};
 }

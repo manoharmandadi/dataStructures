@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/datastructures/cache")
 public class CacheController {
 
-    LRUCache<String, Integer> lruCache = new LRUCache<>(3, 15000); // Example cache with capacity 3 and TTL 15 seconds
+    LRUCache<String, Integer> lruCache = new LRUCache<>(3, 60000); // Example cache with capacity 3 and TTL 15 seconds
 
     @RequestMapping(value = "/lru", method = RequestMethod.POST)
     public String createLRUCache(String key, Integer value) {

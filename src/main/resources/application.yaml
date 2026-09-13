@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    username: postgres
+    password: db_passwd
+    url: jdbc:postgresql://localhost:5432/interview
+logging:
+  level:
+    root: info
+    com:
+      manosoft:
+        datastructures: DEBUG
+    org:
+      hibernate:
+        SQL: DEBUG
+        orm:
+          jdbc:
+            bind: TRACE
