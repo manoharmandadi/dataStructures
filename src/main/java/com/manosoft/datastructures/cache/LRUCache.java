@@ -5,21 +5,26 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Component;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class LRUCache<K,V> {
     public static final Logger logger = LogManager.getLogger(LRUCache.class);
 
+    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+    private final Lock readLock = lock.readLock();
+    private final Lock writeLock = lock.writeLock();
+
     @Getter
     private int capcity;
 
-    @Getter
     private int size =0;
     @Getter
-    private int ttl =0;
-    private Node<K,Cacheable<V>> head = null;
-    private Node<K,Cacheable<V>> tail = null;
-    private Node<K,Cacheable<V>>[] entries = null;
+    private int ttl;
+    private Node<K,Cacheable<V>> head ;
+    private Node<K,Cacheable<V>> tail ;
+    private Node<K,Cacheable<V>>[] entries ;
 
     public LRUCache(int capacity, int ttl){
         this.capcity = capacity;
@@ -28,14 +33,25 @@ public class LRUCache<K,V> {
     }
 
     public void printCache(){
-        Node<K, Cacheable<V>> current = head;
-        while(current != null){
-            logger.info( "{}  -> {}",current.getKey() , current.getValue().get());
-            current = current.after;
+        readLock.lock();
+        try {
+            Node<K, Cacheable<V>> current = head;
+            while(current != null){
+                logger.info( "{}  -> {}",current.getKey() , current.getValue().get());
+                current = current.after;
+            }
+        } finally {
+            readLock.unlock();
         }
     }
+
     public boolean containsKey(K k){
-        return getNode(k) != null;
+        readLock.lock();
+        try {
+            return getNode(k) != null;
+        } finally {
+            readLock.unlock();
+        }
     }
 
     private Node<K,Cacheable<V>> getNode(K k){
@@ -55,19 +71,23 @@ public class LRUCache<K,V> {
     }
 
     public V get(K key){
-        Node<K,Cacheable<V>> node = getNode(key);
-        if(node != null){
-            if(ttl > 0 && (System.currentTimeMillis() - node.getValue().getLastAccessedTime()) > ttl){
-                //Evict the node if it has expired
-                evict(node);
+        // Write lock: get reorders the LRU list and may evict expired entries
+        writeLock.lock();
+        try {
+            Node<K,Cacheable<V>> node = getNode(key);
+            if(node != null){
+                if(ttl > 0 && (System.currentTimeMillis() - node.getValue().getCreationTime()) > ttl){
+                    evict(node);
+                    return null;
+                }
+                updateOrder(node);
+                appendToTail(node);
+                return node.getValue().get();
+            } else {
                 return null;
             }
-            //Move the accessed node to tail to mark it as recently used
-            updateOrder(node);
-            appendToTail(node);
-            return node.getValue().get();
-        } else {
-            return null;
+        } finally {
+            writeLock.unlock();
         }
     }
 
@@ -101,7 +121,7 @@ public class LRUCache<K,V> {
 
     private Node<K,Cacheable<V>> evict(Node<K,Cacheable<V>> node ){
         updateOrder(node);
-        //TODO: Fix next references in the bucket
+        // Update next references in the bucket
         int bucketIdx = getHashIndex(node.getKey());
         Node<K,Cacheable<V>> bucketHead = entries[bucketIdx];
         if(bucketHead == node){
@@ -122,47 +142,47 @@ public class LRUCache<K,V> {
     }
 
     public V put(K k, V v){
-        // If Key Exists, update the value and return the previous value
-        Node<K,Cacheable<V>> existingNode = getNode(k);
-        if(existingNode != null){
-            Cacheable<V> prevVal = existingNode.getValue();
-            existingNode.setValue(new Cacheable<>(v));
-            return prevVal.get();
-        }
-        //  Evict if size is at capacity
-        if(size == capcity){
-            //Remove last node from the linked list and also remove it from the entries array
-            evict(head);
-        }
-
-
-        Node<K,Cacheable<V>> newNode = new Node<>(k,new Cacheable<>(v));
-        size++;
-        if(head == null && tail == null){
-            head = newNode;
-            tail = newNode;
-        } else {
-            // Add to the end of the linked list
-            tail.after = newNode;
-            newNode.before=tail;
-            tail = newNode;
-        }
-
-        int index = getHashIndex(k);
-
-
-        if(entries[index] == null){
-            entries[index] = newNode;
-        } else {
-            // Collision handling using linked list
-            Node<K,Cacheable<V>> current = entries[index];
-            while(current.next != null){
-                current = current.next;
+        writeLock.lock();
+        try {
+            Node<K,Cacheable<V>> existingNode = getNode(k);
+            if(existingNode != null){
+                Cacheable<V> prevVal = existingNode.getValue();
+                existingNode.setValue(new Cacheable<>(v));
+                return prevVal.get();
             }
-            //Now current is the last node in the linked list for this bucket, so we can add the new node to the end
-            current.next = newNode;
+            if(size == capcity){
+                evict(head);
+            }
+
+            Node<K,Cacheable<V>> newNode = new Node<>(k,new Cacheable<>(v));
+            size++;
+            if(head == null && tail == null){
+                head = newNode;
+                tail = newNode;
+            } else {
+                // Add to the end of the linked list
+                tail.after = newNode;
+                newNode.before=tail;
+                tail = newNode;
+            }
+
+            int index = getHashIndex(k);
+
+            if(entries[index] == null){
+                entries[index] = newNode;
+            } else {
+                // Collision handling using linked list
+                Node<K,Cacheable<V>> current = entries[index];
+                while(current.next != null){
+                    current = current.next;
+                }
+                //Now current is the last node in the linked list for this bucket, so we can add the new node to the end
+                current.next = newNode;
+            }
+            return newNode.value.get();
+        } finally {
+            writeLock.unlock();
         }
-        return newNode.value.get();
     }
 
 
@@ -171,7 +191,12 @@ public class LRUCache<K,V> {
     }
 
     public int size(){
-        return size;
+        readLock.lock();
+        try {
+            return size;
+        } finally {
+            readLock.unlock();
+        }
     }
 
     @Setter

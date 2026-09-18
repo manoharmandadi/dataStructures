@@ -9,11 +9,11 @@ public class Cacheable<V> {
     private V value;
     @Getter
     @Setter
-    private long lastAccessedTime;
+    private long creationTime;
 
     public Cacheable(V value) {
         this.value = value;
-        this.lastAccessedTime = System.currentTimeMillis();
+        this.creationTime = System.currentTimeMillis();
     }
 
     public V get() {
